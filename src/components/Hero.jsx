@@ -129,13 +129,13 @@ export default function Hero() {
         opacity: 1,
         duration: 0.8,
         ease: 'power2.out'
-      }, 'exit+=0.4')
+      }, 'exit+=1.0')
       .to(finalCtaRef.current, {
         y: 0,
         opacity: 1,
         duration: 0.8,
         ease: 'power3.out'
-      }, 'exit+=0.4');
+      }, 'exit+=1.0');
 
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
@@ -176,7 +176,7 @@ export default function Hero() {
       <div className="absolute top-[25%] right-[15%] w-[40vw] h-[40vw] rounded-full bg-purple-900/10 glow-blob animate-float z-0" />
 
       {/* Main Grid: Split Layout containing Left Typography and Right Panel */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 pt-24 pb-4 md:pt-28 md:pb-8 grid lg:grid-cols-12 gap-12 items-center">
+      <div className="relative z-30 w-full max-w-7xl mx-auto px-6 md:px-12 pt-24 pb-4 md:pt-28 md:pb-8 grid lg:grid-cols-12 gap-12 items-center">
         
         {/* Left Column (Admissions info & CTA) */}
         <div ref={titleContainerRef} className="lg:col-span-7 text-left flex flex-col items-start select-none animate-in fade-in duration-700">
@@ -286,7 +286,7 @@ export default function Hero() {
       {/* Student 1 (Left to Right) */}
       <div
         ref={studentLeftRef}
-        className="absolute bottom-[5%] left-0 w-[180px] md:w-[280px] lg:w-[350px] aspect-[3/4] z-35 pointer-events-none transform -translate-x-[50%]"
+        className="absolute bottom-[5%] left-0 w-[180px] md:w-[280px] lg:w-[350px] aspect-[3/4] z-10 pointer-events-none transform -translate-x-[50%]"
       >
         <img
           src="/assets/student_left.png?v=2"
@@ -300,7 +300,7 @@ export default function Hero() {
       {/* Student 2 (Right to Left) */}
       <div
         ref={studentRightRef}
-        className="absolute bottom-[5%] right-0 w-[180px] md:w-[280px] lg:w-[350px] aspect-[3/4] z-30 pointer-events-none transform translate-x-[50%]"
+        className="absolute bottom-[5%] right-0 w-[180px] md:w-[280px] lg:w-[350px] aspect-[3/4] z-10 pointer-events-none transform translate-x-[50%]"
       >
         <img
           src="/assets/student_right.png?v=2"

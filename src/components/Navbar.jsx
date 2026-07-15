@@ -27,19 +27,18 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
           ? 'py-3 bg-white/80 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.02)] border-b border-navy-100/50'
           : 'py-5 bg-transparent border-b border-transparent'
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-        
-        {/* Brand Logo: Exact iCVRT layout replica with scroll-driven theme color toggles */}
+
+        {/* Brand Logo: Exact iCVRT layout replica */}
         <a href="#" className="flex items-center group transition-transform duration-300 hover:scale-[1.02]">
           <div className="flex items-center gap-2.5 md:gap-3">
-            
-            {/* Logo Graphic: Red 'i' is static, Navy/White 'CVRT' switches theme */}
+
+            {/* Logo Graphic: Red 'i' and Navy 'CVRT' */}
             <div className="flex items-end select-none">
               <div className="flex flex-col items-center mr-1">
                 {/* Red Dot */}
@@ -54,12 +53,12 @@ export default function Navbar() {
                 CVRT
               </span>
             </div>
-            
+
             {/* Vertical divider line */}
             <div className={`w-[1px] h-7.5 transition-colors duration-300 ${
               isScrolled ? 'bg-primary/25' : 'bg-white/20'
             }`} />
-            
+
             {/* 4 lines Tagline */}
             <div className="flex flex-col text-left leading-[1.05] tracking-tight">
               <span className={`text-[7.5px] font-black uppercase transition-colors duration-300 ${
@@ -132,9 +131,8 @@ export default function Navbar() {
 
       {/* Mobile Drawer */}
       <div
-        className={`fixed inset-x-0 top-[65px] bg-white border-b border-navy-100 shadow-xl transition-all duration-300 lg:hidden overflow-hidden ${
-          mobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 pointer-events-none'
-        }`}
+        className={`fixed inset-x-0 top-[65px] bg-white border-b border-navy-100 shadow-xl transition-all duration-300 lg:hidden overflow-hidden ${mobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 pointer-events-none'
+          }`}
       >
         <div className="px-6 py-8 flex flex-col gap-6 bg-navy-50/50">
           {navLinks.map((link) => (
