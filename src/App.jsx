@@ -24,6 +24,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     // Initialize Lenis smooth scroll
@@ -62,10 +63,10 @@ function App() {
 
       {/* Structured Sections */}
       <main>
-        <Hero />
+        <Hero setSearchQuery={setSearchQuery} />
         <Stats />
         <WhyChooseUs />
-        <Courses />
+        <Courses searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
         <Timeline />
         <LearningExperience />
         <Testimonials />

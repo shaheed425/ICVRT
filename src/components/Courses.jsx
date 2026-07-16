@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Courses() {
+export default function Courses({ searchQuery, setSearchQuery }) {
   const [activeTab, setActiveTab] = useState('All');
   const sectionRef = useRef(null);
   const gridRef = useRef(null);
@@ -81,9 +81,13 @@ export default function Courses() {
     },
   ];
 
-  const filteredCourses = activeTab === 'All'
-    ? coursesData
-    : coursesData.filter(course => course.category === activeTab);
+  const filteredCourses = coursesData.filter(course => {
+    const matchesTab = activeTab === 'All' || course.category === activeTab;
+    const matchesSearch = !searchQuery || 
+      course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      course.desc.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesTab && matchesSearch;
+  });
 
   useEffect(() => {
     // GSAP grid item fade on update
@@ -95,7 +99,7 @@ export default function Courses() {
         { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.1, ease: 'power3.out' }
       );
     }
-  }, [activeTab]);
+  }, [activeTab, searchQuery]);
 
   return (
     <section
@@ -140,18 +144,53 @@ export default function Courses() {
           </div>
         </div>
 
+        {/* Search filter results feedback */}
+        {searchQuery && (
+          <div className="flex items-center gap-3 mb-8 px-4 py-2.5 bg-secondary/5 border border-secondary/15 rounded-xl w-fit">
+            <span className="text-xs font-semibold text-secondary">
+              Showing results for: <strong className="font-extrabold">"{searchQuery}"</strong>
+            </span>
+            <button
+              onClick={() => setSearchQuery('')}
+              className="text-[10px] uppercase tracking-wider font-extrabold text-primary hover:text-secondary border-l border-secondary/20 pl-3 transition-colors cursor-pointer"
+            >
+              Clear Search
+            </button>
+          </div>
+        )}
+
         {/* Courses Grid */}
-        <div
-          ref={gridRef}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {filteredCourses.map((course) => {
-            const CourseIcon = course.icon;
-            return (
-              <div
-                key={course.id}
-                className="group flex flex-col bg-white rounded-3xl overflow-hidden border border-navy-100/80 shadow-[0_4px_30px_rgba(0,0,0,0.01)] hover:shadow-[0_24px_50px_rgba(0,0,0,0.06)] hover:-translate-y-1.5 transition-all duration-300 text-left"
-              >
+        {filteredCourses.length === 0 ? (
+          <div className="w-full py-16 px-6 bg-white border border-navy-100/80 rounded-3xl text-center flex flex-col items-center gap-4 shadow-[0_4px_30px_rgba(0,0,0,0.01)]">
+            <div className="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
+              <ShieldAlert className="w-8 h-8" />
+            </div>
+            <h3 className="text-lg font-bold text-primary">No Matching Programs</h3>
+            <p className="text-slate-500 text-sm max-w-sm">
+              We couldn't find any courses matching "{searchQuery}" under "{activeTab}". Try checking your spelling or clear the search.
+            </p>
+            <button
+              onClick={() => {
+                setSearchQuery('');
+                setActiveTab('All');
+              }}
+              className="px-6 py-2.5 bg-primary text-white text-xs font-bold rounded-xl shadow-md hover:bg-secondary active:scale-[0.98] transition-all duration-300 cursor-pointer"
+            >
+              Reset All Filters
+            </button>
+          </div>
+        ) : (
+          <div
+            ref={gridRef}
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {filteredCourses.map((course) => {
+              const CourseIcon = course.icon;
+              return (
+                <div
+                  key={course.id}
+                  className="group flex flex-col bg-white rounded-3xl overflow-hidden border border-navy-100/80 shadow-[0_4px_30px_rgba(0,0,0,0.01)] hover:shadow-[0_24px_50px_rgba(0,0,0,0.06)] hover:-translate-y-1.5 transition-all duration-300 text-left"
+                >
                 
                 {/* Course Card Image Overlay */}
                 <div className="relative aspect-[16/10] overflow-hidden bg-navy-900">
@@ -223,6 +262,7 @@ export default function Courses() {
             );
           })}
         </div>
+      )}
 
       </div>
     </section>

@@ -18,10 +18,11 @@ const certificatesShort = [
   "Medic First Aid"
 ];
 
-export default function Hero() {
+export default function Hero({ setSearchQuery }) {
   const containerRef = useRef(null);
   const textGroupRef = useRef(null);
   const imageGroupRef = useRef(null);
+  const [localSearch, setLocalSearch] = React.useState('');
 
   useEffect(() => {
     // GSAP staggered entrance animations on load
@@ -99,10 +100,21 @@ export default function Hero() {
           </p>
 
           {/* Search bar input container */}
-          <form className="relative flex items-center w-full max-w-lg mb-6 shadow-[0_8px_30px_rgba(0,0,0,0.02)] rounded-2xl overflow-hidden border border-slate-200 bg-white">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (setSearchQuery) {
+                setSearchQuery(localSearch);
+                document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            className="relative flex items-center w-full max-w-lg mb-6 shadow-[0_8px_30px_rgba(0,0,0,0.02)] rounded-2xl overflow-hidden border border-slate-200 bg-white"
+          >
             <input
               type="text"
               placeholder="Search for a course..."
+              value={localSearch}
+              onChange={(e) => setLocalSearch(e.target.value)}
               className="w-full pl-6 pr-16 py-4 bg-transparent text-primary placeholder-slate-400 font-semibold text-sm focus:outline-none"
             />
             <button
