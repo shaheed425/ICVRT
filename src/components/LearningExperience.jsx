@@ -123,9 +123,10 @@ export default function LearningExperience() {
           
           <div className="relative w-full aspect-[4/3] max-w-[520px] rounded-3xl overflow-hidden bg-navy-950 border border-navy-100 shadow-[0_24px_50px_rgba(0,0,0,0.06)] group">
             <img
-              src="/assets/training_experience.png"
+              src="/assets/training_experience.jpg"
               alt="ICVRT Modern Industrial Training Lab"
               className="w-full h-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-103"
+              loading="lazy"
             />
             {/* Dark gradient fade */}
             <div className="absolute inset-0 bg-gradient-to-t from-primary/50 via-transparent to-transparent pointer-events-none" />

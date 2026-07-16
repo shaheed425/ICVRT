@@ -22,7 +22,7 @@ export default function Courses({ searchQuery, setSearchQuery }) {
       desc: 'Advanced post-graduate training program focusing on chemical hazards, high-rise fire control, risk assessment, and standard evacuation protocols.',
       icon: Flame,
       color: 'bg-orange-500/10 text-orange-600 border-orange-500/20',
-      image: '/assets/training_experience.png', // Fallback to premium experience image
+      image: '/assets/course_fire_safety.jpg',
     },
     {
       id: 2,
@@ -33,7 +33,7 @@ export default function Courses({ searchQuery, setSearchQuery }) {
       desc: 'In-depth analysis of workplace hygiene, accident investigation, hazard isolation, and regulatory OHS policies.',
       icon: ShieldAlert,
       color: 'bg-red-500/10 text-red-600 border-red-500/20',
-      image: '/assets/training_experience.png',
+      image: '/assets/course_ohs.jpg',
     },
     {
       id: 3,
@@ -44,7 +44,7 @@ export default function Courses({ searchQuery, setSearchQuery }) {
       desc: 'Industry standard certification covering fundamental principles of occupational hazard mitigation and risk reporting.',
       icon: Award,
       color: 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20',
-      image: '/assets/hero_illustration.png',
+      image: '/assets/course_nebosh.jpg',
     },
     {
       id: 4,
@@ -55,7 +55,7 @@ export default function Courses({ searchQuery, setSearchQuery }) {
       desc: 'Focuses on factory effluents, air pollution mitigation control, environmental auditing, and corporate compliance standards.',
       icon: Layers,
       color: 'bg-cyan-500/10 text-cyan-600 border-cyan-500/20',
-      image: '/assets/hero_illustration.png',
+      image: '/assets/course_environmental.jpg',
     },
     {
       id: 5,
@@ -66,7 +66,7 @@ export default function Courses({ searchQuery, setSearchQuery }) {
       desc: 'Highly specialized program designed for safety professionals targeting ISO audits, HAZOP, and executive risk reviews.',
       icon: GraduationCap,
       color: 'bg-purple-500/10 text-purple-600 border-purple-500/20',
-      image: '/assets/training_experience.png',
+      image: '/assets/course_safety_audit.jpg',
     },
     {
       id: 6,
@@ -77,7 +77,7 @@ export default function Courses({ searchQuery, setSearchQuery }) {
       desc: 'Comprehensive training for building sites, heavy equipment handling, scaffolding inspection, and structural hazard isolation.',
       icon: BookOpen,
       color: 'bg-blue-500/10 text-blue-600 border-blue-500/20',
-      image: '/assets/training_experience.png',
+      image: '/assets/course_construction.jpg',
     },
   ];
 
@@ -198,6 +198,7 @@ export default function Courses({ searchQuery, setSearchQuery }) {
                     src={course.image}
                     alt={course.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
                   />
                   {/* Category Badge overlay */}
                   <div className="absolute top-4 left-4 z-10">

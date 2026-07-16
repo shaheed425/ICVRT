@@ -10,28 +10,28 @@ export default function Gallery() {
       title: 'Active Fire Fighting Drill',
       tag: 'Field Training',
       size: 'col-span-1 md:row-span-2 md:col-span-2 h-[320px] md:h-[480px]',
-      image: '/assets/training_experience.png',
+      image: '/assets/training_experience.jpg',
     },
     {
       id: 2,
       title: 'VR Hazardous Spill Simulation',
       tag: 'Tech Lab',
       size: 'col-span-1 md:col-span-1 h-[230px]',
-      image: '/assets/hero_illustration.png',
+      image: '/assets/hero_illustration.jpg',
     },
     {
       id: 3,
       title: 'Chemical Safety Suit Guide',
       tag: 'OHS Lab',
       size: 'col-span-1 md:col-span-1 h-[230px]',
-      image: '/assets/training_experience.png',
+      image: '/assets/training_experience.jpg',
     },
     {
       id: 4,
       title: 'Graduation Ceremony 2026',
       tag: 'Felicitation',
       size: 'col-span-1 md:col-span-2 h-[230px]',
-      image: '/assets/hero_illustration.png',
+      image: '/assets/hero_illustration.jpg',
     },
   ];
 
@@ -65,6 +65,7 @@ export default function Gallery() {
                 src={item.image}
                 alt={item.title}
                 className="w-full h-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
               />
 
               {/* Hover Dark Vignette & Details Overlay */}

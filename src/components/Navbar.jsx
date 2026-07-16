@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowUpRight, Phone } from 'lucide-react';
+import { Menu, X, ArrowUpRight, Phone, User, ChevronDown } from 'lucide-react';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -18,83 +18,80 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: 'Courses', href: '#courses' },
-    { name: 'Why ICVRT', href: '#why-choose-us' },
-    { name: 'Admissions', href: '#timeline' },
-    { name: 'Learning Experience', href: '#experience' },
-    { name: 'FAQ', href: '#faq' },
+    { name: 'HOME', href: '#', active: true },
+    { name: 'ABOUT', href: '#why-choose-us' },
+    { name: 'COURSES', href: '#courses' },
+    { name: 'STUDY CENTER', href: '#experience' },
+    { name: 'ACCREDITATIONS', href: '#courses' },
+    { name: 'CORPORATE TRAINING', href: '#timeline' },
+    { name: 'CONTACT', href: '#contact' },
   ];
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-          ? 'py-3 bg-white/90 backdrop-blur-md shadow-[0_10px_30px_rgba(10,28,58,0.07)] border-b border-slate-200/50'
-          : 'py-5 bg-white/80 backdrop-blur-md shadow-[0_4px_20px_rgba(10,28,58,0.03)] border-b border-slate-200/30'
+        ? 'h-16 bg-white shadow-[0_10px_30px_rgba(10,28,58,0.07)] border-b border-slate-200/50'
+        : 'h-20 bg-white shadow-[0_4px_20px_rgba(10,28,58,0.03)] border-b border-slate-200/30'
         }`}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 h-full flex items-center justify-between">
 
         {/* Brand Logo: Exact iCVRT layout replica */}
-        <a href="#" className="flex items-center group transition-transform duration-300 hover:scale-[1.02]">
-          <div className="flex items-center gap-2.5 md:gap-3">
+        <a href="#" className="flex items-center h-full group transition-transform duration-300 hover:scale-[1.01]">
+          <div className="flex items-center gap-2 md:gap-2.5">
 
             {/* Logo Graphic: Red 'i' and Navy 'CVRT' */}
             <div className="flex items-end select-none">
               <div className="flex flex-col items-center mr-1">
                 {/* Red Dot */}
-                <div className="w-[7px] h-[7px] rounded-full bg-secondary mb-[2.5px] shadow-sm" />
+                <div className="w-[6px] h-[6px] rounded-full bg-secondary mb-[1.5px] shadow-sm" />
                 {/* Red Curved Stem */}
-                <div className="w-[7px] h-[19px] bg-secondary rounded-b-[2.5px] rounded-tl-[2.5px] transform skew-x-[-1.5deg]" />
+                <div className="w-[6px] h-[18px] bg-secondary rounded-b-[2px] rounded-tl-[2px] transform skew-x-[-1.5deg]" />
               </div>
               {/* CVRT text */}
-              <span className="font-display font-black text-2xl md:text-3xl tracking-tight leading-none text-primary transition-colors duration-300">
+              <span className="font-display font-black text-2xl tracking-tight leading-none text-primary">
                 CVRT
               </span>
             </div>
 
             {/* Vertical divider line */}
-            <div className="w-[1px] h-7.5 bg-primary/25 transition-colors duration-300" />
+            <div className="w-[1px] h-7 bg-slate-300" />
 
             {/* 4 lines Tagline */}
             <div className="flex flex-col text-left leading-[1.05] tracking-tight">
-              <span className="text-[7.5px] font-black uppercase text-primary transition-colors duration-300">International Council</span>
-              <span className="text-[7px] font-bold uppercase text-primary/80 transition-colors duration-300">of Vocational</span>
-              <span className="text-[7px] font-bold uppercase text-primary/80 transition-colors duration-300">and Research</span>
-              <span className="text-[7px] font-bold uppercase text-primary/80 transition-colors duration-300">Training</span>
+              <span className="text-[7.5px] font-black uppercase text-primary">International Council</span>
+              <span className="text-[7px] font-bold uppercase text-primary/85">of Vocational</span>
+              <span className="text-[7px] font-bold uppercase text-primary/85">and Research</span>
+              <span className="text-[7px] font-bold uppercase text-primary/85">Training</span>
             </div>
           </div>
         </a>
 
-        {/* Desktop Nav Links */}
-        <nav className="hidden lg:flex items-center gap-8">
+        {/* Desktop Nav Links (Mockup Matched - Height stretch) */}
+        <nav className="hidden lg:flex items-stretch h-full">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="text-sm font-semibold transition-colors duration-300 relative py-2 after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-secondary after:scale-x-0 hover:after:scale-x-100 after:origin-right hover:after:origin-left after:transition-transform after:duration-300 text-primary/85 hover:text-secondary"
+              className={`flex items-center px-4 font-display font-extrabold text-[11px] tracking-wider transition-all duration-300 ${link.active
+                  ? 'bg-secondary text-white px-6'
+                  : 'text-primary/80 hover:text-secondary hover:bg-slate-50/50'
+                }`}
             >
               {link.name}
             </a>
           ))}
         </nav>
 
-        {/* CTAs */}
-        <div className="hidden lg:flex items-center gap-6">
-          <a
-            href="https://wa.me/1234567890"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-sm font-semibold transition-colors duration-300 group text-primary/85 hover:text-secondary"
-          >
-            <Phone className="w-4 h-4 text-accent animate-pulse" />
-            <span className="group-hover:translate-x-0.5 transition-transform duration-200">Consult Counselor</span>
-          </a>
+        {/* Login Capsule Button */}
+        <div className="hidden lg:flex items-center h-full">
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 text-sm font-bold px-6 py-3 rounded-full transition-all duration-500 shadow-md hover:-translate-y-[2px] bg-primary hover:bg-secondary text-white shadow-primary/10 hover:shadow-secondary/20"
+            className="flex items-center gap-2 px-5 py-2.5 bg-primary text-white text-xs font-black rounded-xl shadow-md hover:bg-secondary active:scale-[0.98] transition-all duration-300"
           >
-            <span>Apply Now</span>
-            <ArrowUpRight className="w-4 h-4" />
+            <User className="w-3.5 h-3.5" />
+            <span>Login</span>
+            <ChevronDown className="w-3 h-3 opacity-70" />
           </a>
         </div>
 
