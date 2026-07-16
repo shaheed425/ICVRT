@@ -7,7 +7,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 3800) {
+      if (window.scrollY > 50) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -28,8 +28,8 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-          ? 'py-3 bg-white/80 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.02)] border-b border-navy-100/50'
-          : 'py-5 bg-transparent border-b border-transparent'
+          ? 'py-3 bg-white/90 backdrop-blur-md shadow-[0_10px_30px_rgba(10,28,58,0.07)] border-b border-slate-200/50'
+          : 'py-5 bg-white/80 backdrop-blur-md shadow-[0_4px_20px_rgba(10,28,58,0.03)] border-b border-slate-200/30'
         }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
@@ -42,37 +42,25 @@ export default function Navbar() {
             <div className="flex items-end select-none">
               <div className="flex flex-col items-center mr-1">
                 {/* Red Dot */}
-                <div className="w-[7px] h-[7px] rounded-full bg-secondary mb-[2px] shadow-sm" />
+                <div className="w-[7px] h-[7px] rounded-full bg-secondary mb-[2.5px] shadow-sm" />
                 {/* Red Curved Stem */}
                 <div className="w-[7px] h-[19px] bg-secondary rounded-b-[2.5px] rounded-tl-[2.5px] transform skew-x-[-1.5deg]" />
               </div>
               {/* CVRT text */}
-              <span className={`font-display font-black text-2xl md:text-3xl tracking-tight leading-none transition-colors duration-300 ${
-                isScrolled ? 'text-primary' : 'text-white'
-              }`}>
+              <span className="font-display font-black text-2xl md:text-3xl tracking-tight leading-none text-primary transition-colors duration-300">
                 CVRT
               </span>
             </div>
 
             {/* Vertical divider line */}
-            <div className={`w-[1px] h-7.5 transition-colors duration-300 ${
-              isScrolled ? 'bg-primary/25' : 'bg-white/20'
-            }`} />
+            <div className="w-[1px] h-7.5 bg-primary/25 transition-colors duration-300" />
 
             {/* 4 lines Tagline */}
             <div className="flex flex-col text-left leading-[1.05] tracking-tight">
-              <span className={`text-[7.5px] font-black uppercase transition-colors duration-300 ${
-                isScrolled ? 'text-primary' : 'text-white'
-              }`}>International Council</span>
-              <span className={`text-[7px] font-bold uppercase transition-colors duration-300 ${
-                isScrolled ? 'text-primary/80' : 'text-white/80'
-              }`}>of Vocational</span>
-              <span className={`text-[7px] font-bold uppercase transition-colors duration-300 ${
-                isScrolled ? 'text-primary/80' : 'text-white/80'
-              }`}>and Research</span>
-              <span className={`text-[7px] font-bold uppercase transition-colors duration-300 ${
-                isScrolled ? 'text-primary/80' : 'text-white/80'
-              }`}>Training</span>
+              <span className="text-[7.5px] font-black uppercase text-primary transition-colors duration-300">International Council</span>
+              <span className="text-[7px] font-bold uppercase text-primary/80 transition-colors duration-300">of Vocational</span>
+              <span className="text-[7px] font-bold uppercase text-primary/80 transition-colors duration-300">and Research</span>
+              <span className="text-[7px] font-bold uppercase text-primary/80 transition-colors duration-300">Training</span>
             </div>
           </div>
         </a>
@@ -83,9 +71,7 @@ export default function Navbar() {
             <a
               key={link.name}
               href={link.href}
-              className={`text-sm font-semibold transition-colors duration-300 relative py-2 after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-secondary after:scale-x-0 hover:after:scale-x-100 after:origin-right hover:after:origin-left after:transition-transform after:duration-300 ${
-                isScrolled ? 'text-primary/80 hover:text-secondary' : 'text-white/80 hover:text-secondary'
-              }`}
+              className="text-sm font-semibold transition-colors duration-300 relative py-2 after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-secondary after:scale-x-0 hover:after:scale-x-100 after:origin-right hover:after:origin-left after:transition-transform after:duration-300 text-primary/85 hover:text-secondary"
             >
               {link.name}
             </a>
@@ -98,20 +84,14 @@ export default function Navbar() {
             href="https://wa.me/1234567890"
             target="_blank"
             rel="noopener noreferrer"
-            className={`flex items-center gap-2 text-sm font-semibold transition-colors duration-300 group ${
-              isScrolled ? 'text-navy-600 hover:text-secondary' : 'text-white/80 hover:text-secondary'
-            }`}
+            className="flex items-center gap-2 text-sm font-semibold transition-colors duration-300 group text-primary/85 hover:text-secondary"
           >
             <Phone className="w-4 h-4 text-accent animate-pulse" />
             <span className="group-hover:translate-x-0.5 transition-transform duration-200">Consult Counselor</span>
           </a>
           <a
             href="#contact"
-            className={`inline-flex items-center gap-2 text-sm font-bold px-6 py-3 rounded-full transition-all duration-500 shadow-md hover:-translate-y-[2px] ${
-              isScrolled 
-                ? 'bg-primary hover:bg-secondary text-white shadow-primary/10 hover:shadow-secondary/20' 
-                : 'bg-white hover:bg-secondary hover:text-white text-primary shadow-white/5 hover:shadow-secondary/20'
-            }`}
+            className="inline-flex items-center gap-2 text-sm font-bold px-6 py-3 rounded-full transition-all duration-500 shadow-md hover:-translate-y-[2px] bg-primary hover:bg-secondary text-white shadow-primary/10 hover:shadow-secondary/20"
           >
             <span>Apply Now</span>
             <ArrowUpRight className="w-4 h-4" />
@@ -121,9 +101,7 @@ export default function Navbar() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className={`lg:hidden p-2 transition-colors focus:outline-none ${
-            isScrolled ? 'text-primary hover:text-secondary' : 'text-white hover:text-secondary'
-          }`}
+          className="lg:hidden p-2 transition-colors focus:outline-none text-primary hover:text-secondary"
         >
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>

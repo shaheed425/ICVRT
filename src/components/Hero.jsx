@@ -1,247 +1,253 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Award } from 'lucide-react';
+import { Award, Briefcase, ShieldCheck, Users, ArrowRight, Monitor, Search } from 'lucide-react';
 
-gsap.registerPlugin(ScrollTrigger);
+const features = [
+  { title: "Globally", desc: "Recognized Certifications", icon: Award },
+  { title: "Online & Offline", desc: "Interactive Training", icon: Monitor },
+  { title: "100+ Expert", desc: "Instructors & Trainers", icon: Users },
+  { title: "Practical &", desc: "Hands-on Learning", icon: Briefcase },
+  { title: "Placement Assistance", desc: "& Career Support", icon: ShieldCheck }
+];
 
-// Helper to draw an image centered with "cover" aspect-ratio cropping
-function drawImageProp(ctx, img, x, y, w, h, offsetX = 0.5, offsetY = 0.5) {
-  const iw = img.width;
-  const ih = img.height;
-  const r = Math.min(w / iw, h / ih);
-  let nw = iw * r;
-  let nh = ih * r;
-  let ar = 1;
-
-  if (nw < w) ar = w / nw;
-  if (Math.abs(ar - 1) < 1e-14 && nh < h) ar = h / nh;
-  nw *= ar;
-  nh *= ar;
-
-  let cw = iw / (nw / w);
-  let ch = ih / (nh / h);
-
-  let cx = (iw - cw) * offsetX;
-  let cy = (ih - ch) * offsetY;
-
-  if (cx < 0) cx = 0;
-  if (cy < 0) cy = 0;
-  if (cw > iw) cw = iw;
-  if (ch > ih) ch = ih;
-
-  ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
-}
+const certificatesShort = [
+  "OTHM Approved",
+  "IOSH Managing Safely",
+  "OSHA Certified",
+  "OAL Accredited",
+  "Medic First Aid"
+];
 
 export default function Hero() {
-  const stickyFrameRef = useRef(null);
-  const canvasRef = useRef(null);
-  const text1Ref = useRef(null);
-  const text2Ref = useRef(null);
-
-  const [loadingProgress, setLoadingProgress] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  const totalFrames = 221;
-  const imagesRef = useRef([]);
-  const frameObjRef = useRef({ frame: 0 });
+  const containerRef = useRef(null);
+  const textGroupRef = useRef(null);
+  const imageGroupRef = useRef(null);
 
   useEffect(() => {
-    let loadedCount = 0;
-    const loadedImages = [];
+    // GSAP staggered entrance animations on load
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-    // Preload all 221 Full HD frames (using v12 to clear browser caches)
-    for (let i = 0; i < totalFrames; i++) {
-      const img = new Image();
-      const frameNum = (i + 1).toString().padStart(3, '0');
-      img.src = `/images/herosection/ezgif-frame-${frameNum}.png?v=12`;
-
-      img.onload = () => {
-        loadedCount++;
-        setLoadingProgress(Math.floor((loadedCount / totalFrames) * 100));
-
-        if (loadedCount === totalFrames) {
-          imagesRef.current = loadedImages;
-          setIsLoaded(true);
-        }
-      };
-
-      img.onerror = () => {
-        loadedCount++;
-        setLoadingProgress(Math.floor((loadedCount / totalFrames) * 100));
-        if (loadedCount === totalFrames) {
-          imagesRef.current = loadedImages;
-          setIsLoaded(true);
-        }
-      };
-
-      loadedImages.push(img);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!isLoaded || !canvasRef.current) return;
-
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
-
-    // Size canvas to viewport dimensions
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const render = () => {
-      const currentFrameIndex = frameObjRef.current.frame;
-      const img = imagesRef.current[currentFrameIndex];
-      if (img && img.complete) {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Force high-quality interpolation scaling
-        context.imageSmoothingEnabled = true;
-        context.imageSmoothingQuality = 'high';
-
-        // Draw the image at 100% scale to cover the full viewport
-        // This removes the bordered box look and makes the layout borderless and clean
-        drawImageProp(context, img, 0, 0, canvas.width, canvas.height, 0.5, 0.5);
-      }
-    };
-
-    // Draw first frame
-    render();
-
-    // GSAP ScrollTrigger timeline to orchestrate scroll sequence & text overlays
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: stickyFrameRef.current,
-        start: 'top top',
-        end: '+=4000', // Scroll space
-        scrub: 0.5,
-        pin: true,
-        pinSpacing: true,
-        onUpdate: (self) => {
-          // Map scroll progress directly to frame index
-          const index = Math.min(
-            totalFrames - 1,
-            Math.floor(self.progress * totalFrames)
-          );
-          if (frameObjRef.current.frame !== index) {
-            frameObjRef.current.frame = index;
-            render();
-          }
-        }
-      }
-    });
-
-    // Scene 1: Initial headline fades out and lifts up during initial scroll (0 to 25%)
-    tl.to(text1Ref.current, {
-      opacity: 0,
-      scale: 0.85,
-      y: -60,
-      duration: 1
-    }, 0);
-
-    // Scene 2: Handshake headline fades in and scales up during middle scroll (40% to 80%)
-    tl.fromTo(text2Ref.current,
-      { opacity: 0, y: 60, scale: 0.95 },
-      { opacity: 1, y: 0, scale: 1, duration: 1.2 },
-      1.5 // Delay start until Scene 1 completes
+    tl.fromTo(
+      textGroupRef.current.children,
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, delay: 0.2 }
     );
 
-    // Scene 2 exit: Fades out at the end of the scroll
-    tl.to(text2Ref.current, {
-      opacity: 0,
-      y: -40,
-      scale: 0.98,
-      duration: 1
-    }, 3.2);
+    tl.fromTo(
+      imageGroupRef.current,
+      { opacity: 0, scale: 0.97, y: 20 },
+      { opacity: 1, scale: 1, y: 0, duration: 1 },
+      '-=0.6'
+    );
+  }, []);
 
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      render();
-    };
+  const handleMouseMove = (e) => {
+    const card = e.currentTarget;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    card.style.setProperty('--mouse-x', `${x}px`);
+    card.style.setProperty('--mouse-y', `${y}px`);
 
-    window.addEventListener('resize', handleResize);
+    // Subtle 3D perspective tilt
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = ((y - centerY) / centerY) * -2;
+    const rotateY = ((x - centerX) / centerX) * 2;
+    
+    card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+  };
 
-    return () => {
-      tl.kill();
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [isLoaded]);
+  const handleMouseLeave = (e) => {
+    const card = e.currentTarget;
+    if (!card) return;
+    card.style.transform = `perspective(1200px) rotateX(0deg) rotateY(0deg) translateY(0)`;
+  };
 
   return (
     <section
-      ref={stickyFrameRef}
-      className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-[#d6d1ce] z-10"
+      ref={containerRef}
+      className="relative min-h-screen w-full overflow-hidden flex flex-col justify-between bg-gradient-to-br from-[#F8FAFC] via-white to-[#F1F5F9] pt-28 md:pt-36 z-10"
     >
-      {/* Luxury Loading Backdrop */}
-      {!isLoaded && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#d6d1ce] z-50">
-          <div className="flex flex-col items-center gap-5">
-            <div className="w-12 h-12 rounded-full border-2 border-secondary/20 border-t-secondary animate-spin" />
-            <div className="flex flex-col items-center">
-              <span className="font-display font-black text-lg text-primary uppercase tracking-[0.2em]">ICVRT</span>
-              <span className="text-[10px] text-navy-600 font-bold tracking-widest mt-2 uppercase">
-                Loading Experience {loadingProgress}%
-              </span>
+      {/* Background grid details */}
+      <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1.1px,transparent_1.1px)] [background-size:18px_18px] opacity-25 pointer-events-none z-0" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-secondary/5 blur-[120px] pointer-events-none z-0" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full bg-blue-500/5 blur-[120px] pointer-events-none z-0" />
+
+      <div className="max-w-7xl mx-auto px-6 md:px-12 grid lg:grid-cols-12 gap-12 lg:gap-16 items-center relative z-10 w-full mt-6 md:mt-10 flex-grow pb-12 lg:pb-20">
+        
+        {/* LEFT COLUMN: HERO COPY & SEARCH BAR */}
+        <div
+          ref={textGroupRef}
+          className="lg:col-span-6 flex flex-col items-start text-left w-full max-w-full overflow-hidden"
+        >
+          {/* Top category label */}
+          <span className="text-[10px] sm:text-xs font-black text-secondary uppercase tracking-widest mb-4">
+            EMPOWERING PEOPLE. ENHANCING SAFETY.
+          </span>
+
+          {/* Bold, punchy headline */}
+          <h1 className="font-display font-black text-3xl sm:text-5xl xl:text-[4.5rem] text-primary tracking-tight leading-[0.95] mb-5">
+            BUILD YOUR CAREER<br />
+            IN <span className="text-secondary">SAFETY</span> EXCELLENCE
+          </h1>
+
+          {/* Description */}
+          <p className="text-xs sm:text-sm text-slate-600 font-semibold leading-relaxed max-w-xl mb-6">
+            Professional training programs that meet global standards and industry demands.
+          </p>
+
+          {/* Search bar input container */}
+          <form className="relative flex items-center w-full max-w-lg mb-6 shadow-[0_8px_30px_rgba(0,0,0,0.02)] rounded-2xl overflow-hidden border border-slate-200 bg-white">
+            <input
+              type="text"
+              placeholder="Search for a course..."
+              className="w-full pl-6 pr-16 py-4 bg-transparent text-primary placeholder-slate-400 font-semibold text-sm focus:outline-none"
+            />
+            <button
+              type="submit"
+              className="absolute right-2 px-5 py-2.5 bg-secondary text-white font-bold rounded-xl shadow-md hover:bg-[#b00f28] active:scale-[0.98] transition-all duration-300 flex items-center justify-center"
+            >
+              <Search className="w-4 h-4" />
+            </button>
+          </form>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col md:flex-row items-stretch md:items-center gap-4 w-full md:w-auto">
+            <a
+              href="#courses"
+              className="group flex items-center justify-center gap-2 px-8 py-4 bg-secondary text-white font-display font-bold text-sm uppercase tracking-wider rounded-2xl shadow-[0_10px_25px_rgba(200,16,46,0.15)] hover:shadow-[0_15px_30px_rgba(200,16,46,0.25)] hover:bg-[#b00f28] transition-all duration-300 relative overflow-hidden active:scale-[0.98] w-full md:w-auto text-center"
+            >
+              Explore Courses
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+            </a>
+            
+            <a
+              href="#timeline"
+              className="flex items-center justify-center gap-2 px-8 py-4 bg-white/70 backdrop-blur-sm border border-primary text-primary font-display font-bold text-sm uppercase tracking-wider rounded-2xl hover:bg-white/90 active:scale-[0.98] transition-all duration-300 w-full md:w-auto text-center"
+            >
+              Corporate Training
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
+
+        {/* RIGHT COLUMN: INTERACTIVE VISUAL FRAME DISPLAY & SCROLLING LABELS */}
+        <div
+          ref={imageGroupRef}
+          className="lg:col-span-6 flex flex-col items-center gap-4 w-full max-w-full overflow-hidden relative"
+        >
+          {/* Main Visual Image Wrapper Card (Mac-Style Browser Wrapper) */}
+          <div
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className="group relative rounded-[2.5rem] p-3 bg-slate-900/40 backdrop-blur-md border border-slate-800/80 shadow-[0_25px_60px_rgba(10,28,58,0.1)] hover:border-blue-500/35 transition-all duration-500 ease-out overflow-hidden w-full"
+            style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}
+          >
+            {/* Browser Control Header */}
+            <div className="flex items-center gap-1.5 px-5 pb-3 pt-2 border-b border-slate-800/85">
+              <div className="w-2.5 h-2.5 rounded-full bg-[#FF5F56]" />
+              <div className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]" />
+              <div className="w-2.5 h-2.5 rounded-full bg-[#27C93F]" />
+              <div className="ml-4 flex items-center gap-1 text-[9px] text-slate-400 bg-slate-950/40 px-3 py-1 rounded-md border border-slate-800/50 w-full max-w-[150px]">
+                <Monitor className="w-2.5 h-2.5 shrink-0" />
+                <span className="truncate">icvrt-excellence.org</span>
+              </div>
+            </div>
+
+            {/* Visual Container */}
+            <div className="rounded-[1.8rem] overflow-hidden aspect-[1.75/1] sm:aspect-[2.01/1] bg-slate-950 mt-3.5">
+              <img
+                src="/assets/hero_engineer.png"
+                alt="iCVRT safety expert engineer visual"
+                className="w-full h-full object-cover opacity-95 transition-transform duration-700 group-hover:scale-[1.02]"
+              />
+            </div>
+          </div>
+
+          {/* Small Auto-Scrolling Certificate Ribbon (Gray background, directly under image card) */}
+          <div className="w-full flex flex-col items-center gap-2 mt-2">
+            <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-[0.2em] text-center">
+              Accreditations
+            </span>
+            <div className="group w-full py-2.5 bg-slate-100 border border-slate-200/80 rounded-2xl overflow-hidden relative pointer-events-auto cursor-pointer shadow-sm hover:bg-slate-200/40 transition-colors duration-300">
+              <div className="flex w-[200%] animate-[marquee_20s_linear_infinite] group-hover:[animation-play-state:paused]">
+                {/* First Loop */}
+                <div className="flex justify-around min-w-full shrink-0 items-center">
+                  {certificatesShort.map((cert, index) => (
+                    <div key={`cert-short-1-${index}`} className="flex items-center gap-2">
+                      <span className="h-1.5 w-1.5 rounded-full bg-secondary shadow-[0_0_6px_#C8102E] group-hover:bg-black group-hover:shadow-none transition-all duration-300" />
+                      <span className="text-[10px] font-bold text-slate-600 group-hover:text-secondary tracking-wider uppercase transition-colors duration-300">{cert}</span>
+                    </div>
+                  ))}
+                </div>
+                {/* Second Loop */}
+                <div className="flex justify-around min-w-full shrink-0 items-center">
+                  {certificatesShort.map((cert, index) => (
+                    <div key={`cert-short-2-${index}`} className="flex items-center gap-2">
+                      <span className="h-1.5 w-1.5 rounded-full bg-secondary shadow-[0_0_6px_#C8102E] group-hover:bg-black group-hover:shadow-none transition-all duration-300" />
+                      <span className="text-[10px] font-bold text-slate-600 group-hover:text-secondary tracking-wider uppercase transition-colors duration-300">{cert}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      )}
 
-      {/* TYPOGRAPHIC OVERLAY 1: Landing Headline (Fades out on scroll) */}
-      {isLoaded && (
-        <div
-          ref={text1Ref}
-          className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20 select-none px-6 mt-20"
-        >
-          <h1 className="font-display font-black text-4xl sm:text-6xl lg:text-[5.5rem] text-primary/10 tracking-tight uppercase text-center leading-[0.95] transition-all">
-            Learn Safety.<br />
-            <span className="text-secondary/15">Build The Future.</span>
-          </h1>
-          <p className="text-[9px] sm:text-xs font-bold tracking-[0.35em] uppercase text-primary/45 mt-4 text-center">
-            International Council of Vocational and Research Training
-          </p>
+      </div>
+
+      {/* STATIC LIGHT GREY BOTTOM FEATURE BAND WITH CARD TILES */}
+      <div className="w-full py-12 bg-slate-100/80 border-t border-slate-200/80 relative z-20">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          {features.map((feat, index) => {
+            const Icon = feat.icon;
+            return (
+              <div
+                key={index}
+                className="flex flex-col items-start gap-4 p-6 bg-white border border-slate-200/60 rounded-2xl shadow-[0_4px_20px_rgba(10,28,58,0.02)] hover:shadow-[0_12px_25px_rgba(10,28,58,0.05)] hover:-translate-y-1 transition-all duration-300 w-full"
+              >
+                <div className="w-10 h-10 rounded-xl bg-secondary/10 border border-secondary/20 flex items-center justify-center text-secondary shrink-0">
+                  <Icon className="w-5 h-5" />
+                </div>
+                <div className="text-left">
+                  <h4 className="text-xs font-black text-primary uppercase tracking-wider leading-tight">{feat.title}</h4>
+                  <p className="text-[11px] text-slate-500 font-bold mt-2 leading-relaxed">{feat.desc}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
-      )}
+      </div>
 
-      {/* TYPOGRAPHIC OVERLAY 2: Handshake Headline (Fades in when students meet) */}
-      {isLoaded && (
-        <div
-          ref={text2Ref}
-          className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20 select-none px-6 mt-20 opacity-0"
-        >
-          <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-[4.5rem] text-primary/15 tracking-tight uppercase text-center leading-[1.0] transition-all">
-            Empowering Careers.<br />
-            <span className="text-secondary/20">Certified Worldwide.</span>
-          </h2>
-          <p className="text-[9px] sm:text-xs font-bold tracking-[0.3em] uppercase text-primary/50 mt-4 text-center">
-            Voted Leading Global Industrial Training Framework
-          </p>
-        </div>
-      )}
-
-      {/* FLOATING ACCREDITATION BADGE (Covers the watermark region in the bottom-right corner) */}
-      {isLoaded && (
-        <div className="absolute bottom-12 right-8 md:right-16 lg:right-24 bg-white/20 backdrop-blur-md border border-white/25 rounded-2xl p-4 shadow-[0_12px_35px_rgba(10,28,58,0.05)] flex items-center gap-3.5 z-20 pointer-events-none select-none max-w-[280px]">
-          <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center text-white shrink-0 shadow-sm animate-pulse">
-            <Award className="w-5 h-5" />
-          </div>
-          <div>
-            <span className="text-[8px] font-bold tracking-[0.2em] text-primary/70 uppercase block">Accredited Center</span>
-            <h3 className="font-display font-black text-xs text-primary tracking-tight uppercase leading-none mt-0.5">ISO 45001:2018</h3>
-            <p className="text-[9px] text-primary/60 font-semibold leading-tight mt-1">International Council Compliance Verifiable</p>
-          </div>
-        </div>
-      )}
-
-      {/* Frame Sequence Canvas */}
-      {isLoaded && (
-        <canvas
-          ref={canvasRef}
-          className="w-full h-full block bg-[#d6d1ce] z-10 relative"
-          style={{ imageRendering: 'auto' }}
-        />
-      )}
+      {/* Dynamic Keyframe animations */}
+      <style>{`
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-8px);
+          }
+        }
+        @keyframes drift {
+          0%, 100% {
+            transform: translate(0, 0) scale(1);
+          }
+          50% {
+            transform: translate(30px, -30px) scale(1.03);
+          }
+        }
+        @keyframes marquee {
+          0% {
+            transform: translateX(0%);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+      `}</style>
     </section>
   );
 }

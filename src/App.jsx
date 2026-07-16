@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Stats from './components/Stats';
@@ -14,6 +14,7 @@ import CTA from './components/CTA';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import FloatingBlobs from './components/FloatingBlobs';
+import Loader from './components/Loader';
 
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
@@ -22,6 +23,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
     // Initialize Lenis smooth scroll
     const lenis = new Lenis({
@@ -48,6 +51,9 @@ function App() {
 
   return (
     <div className="relative min-h-screen bg-white text-primary antialiased font-sans selection:bg-secondary selection:text-white">
+      {/* Intro Loading Screen */}
+      {!isLoaded && <Loader onComplete={() => setIsLoaded(true)} />}
+
       {/* Background Glowing Blobs */}
       <FloatingBlobs />
 
