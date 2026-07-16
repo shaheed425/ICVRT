@@ -66,7 +66,7 @@ export default function Hero({ setSearchQuery }) {
           </h1>
 
           {/* Description */}
-          <p className="text-xs sm:text-sm text-slate-600 font-semibold leading-relaxed max-w-xl mb-6">
+          <p className="text-[13px] sm:text-sm text-slate-900 sm:text-slate-600 font-extrabold sm:font-semibold leading-relaxed max-w-xl mb-6">
             Professional training programs that meet global standards and industry demands.
           </p>
 

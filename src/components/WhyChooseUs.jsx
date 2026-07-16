@@ -177,74 +177,53 @@ export default function WhyChooseUs() {
               We deliver internationally recognized certifications, practical training, and real career opportunities to shape a safer and brighter tomorrow.
             </p>
 
-            {/* Overlapping Image Collage (Responsive Layout) */}
-            
-            {/* Mobile (under sm) */}
-            <div className="sm:hidden relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-md">
-              <img
-                src="/assets/why_choose_center.jpg"
-                alt="Safety training visual"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-xl p-2.5 shadow-md flex items-center gap-2 border border-slate-100">
-                <div className="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center text-secondary shrink-0">
-                  <ShieldCheck className="w-4 h-4" />
-                </div>
-                <div>
-                  <h5 className="text-[10px] font-black text-primary leading-none">500+ Students</h5>
-                  <div className="flex gap-0.5 text-secondary mt-0.5">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} className="w-2.5 h-2.5 fill-current" />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Desktop/Tablet Collage (sm and up) */}
-            <div className="hidden sm:block relative h-[420px] w-full mt-6 z-10">
+            {/* Overlapping Image Collage (Fully Responsive Layout) */}
+            <div className="relative h-[290px] sm:h-[340px] lg:h-[420px] w-[320px] sm:w-full mx-auto sm:mx-0 mt-6 z-10">
               
               {/* Glowing decorative curvature border backdrop overlay */}
-              <div className="absolute left-[24%] bottom-[-15px] w-64 h-64 border-[8px] border-secondary/5 rounded-full pointer-events-none -z-10" />
+              <div className="absolute left-[24%] bottom-[-15px] w-52 sm:w-64 h-52 sm:h-64 border-4 sm:border-[8px] border-secondary/5 rounded-full pointer-events-none -z-10" />
 
               {/* Image 1: Left Background (Handshake) */}
-              <div className="absolute left-0 bottom-4 w-44 h-57 rounded-[2.2rem] border-[5px] border-white shadow-md rotate-[-4deg] overflow-hidden transition-transform duration-300 hover:rotate-0 hover:scale-[1.02] cursor-pointer">
+              <div className="absolute left-0 bottom-2 sm:bottom-4 w-32 sm:w-36 lg:w-44 h-40 sm:h-48 lg:h-[228px] rounded-[1.2rem] sm:rounded-[1.8rem] lg:rounded-[2.2rem] border-2 sm:border-4 lg:border-[5px] border-white shadow-md rotate-[-4deg] overflow-hidden transition-transform duration-300 hover:rotate-0 hover:scale-[1.02] cursor-pointer">
                 <img
                   src="/assets/why_choose_left.jpg"
                   alt="Corporate handshake"
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
               </div>
 
               {/* Image 2: Center Foreground (Safety Engineer) */}
-              <div className="absolute left-[28%] bottom-0 w-52 h-64 rounded-[2.5rem] border-[5px] border-white shadow-xl overflow-hidden transition-transform duration-300 hover:scale-[1.02] cursor-pointer">
+              <div className="absolute left-[24%] sm:left-[28%] bottom-0 w-[150px] sm:w-52 lg:w-52 h-[210px] sm:h-64 lg:h-64 rounded-[1.4rem] sm:rounded-[2rem] lg:rounded-[2.5rem] border-2 sm:border-4 lg:border-[5px] border-white shadow-xl overflow-hidden transition-transform duration-300 hover:scale-[1.02] cursor-pointer">
                 <img
                   src="/assets/why_choose_center.jpg"
                   alt="ICVRT safety specialist engineer"
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
               </div>
 
               {/* Image 3: Right Background (Skyscrapers) */}
-              <div className="absolute right-0 bottom-8 w-[179px] h-[230px] rounded-[2.2rem] border-[5px] border-white shadow-md rotate-[4deg] overflow-hidden transition-transform duration-300 hover:rotate-0 hover:scale-[1.02] cursor-pointer">
+              <div className="absolute left-[52%] sm:left-[60%] bottom-4 sm:bottom-8 w-[115px] sm:w-[140px] lg:w-[179px] h-[155px] sm:h-[180px] lg:h-[230px] rounded-[1.2rem] sm:rounded-[1.8rem] lg:rounded-[2.2rem] border-2 sm:border-4 lg:border-[5px] border-white shadow-md rotate-[4deg] overflow-hidden transition-transform duration-300 hover:rotate-0 hover:scale-[1.02] cursor-pointer">
                 <img
                   src="/assets/why_choose_right.jpg"
                   alt="City skyscrapers visual"
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
               </div>
 
               {/* Floating Trust Card */}
-              <div className="absolute left-[20%] bottom-6 bg-white rounded-2xl shadow-xl border border-slate-100 p-3.5 flex items-center gap-3.5 max-w-[190px] animate-bounce-slow hover:scale-105 transition-transform duration-300 cursor-pointer z-20">
-                <div className="w-9 h-9 rounded-full bg-secondary/10 flex items-center justify-center text-secondary shrink-0">
-                  <ShieldCheck className="w-5 h-5" />
+              <div className="absolute left-[12%] sm:left-[20%] bottom-4 sm:bottom-6 bg-white rounded-xl sm:rounded-2xl shadow-xl border border-slate-100 p-2 sm:p-3.5 flex items-center gap-2 sm:gap-3.5 max-w-[135px] sm:max-w-[190px] animate-bounce-slow hover:scale-105 transition-transform duration-300 cursor-pointer z-20">
+                <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-secondary/10 flex items-center justify-center text-secondary shrink-0">
+                  <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
                 <div>
-                  <span className="text-[9px] text-slate-500 font-extrabold block uppercase tracking-wider leading-none">Trusted by</span>
-                  <h5 className="text-[11px] font-black text-primary leading-none mt-1">500+ Students</h5>
-                  <div className="flex gap-0.5 text-secondary mt-1">
+                  <span className="text-[7px] sm:text-[9px] text-slate-500 font-extrabold block uppercase tracking-wider leading-none">Trusted by</span>
+                  <h5 className="text-[9px] sm:text-[11px] font-black text-primary leading-none mt-0.5 sm:mt-1">500+ Students</h5>
+                  <div className="flex gap-0.5 text-secondary mt-0.5 sm:mt-1">
                     {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} className="w-2.5 h-2.5 fill-current" />
+                      <Star key={i} className="w-2 h-2 sm:w-2.5 sm:h-2.5 fill-current" />
                     ))}
                   </div>
                 </div>
