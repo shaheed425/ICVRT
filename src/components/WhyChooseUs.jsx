@@ -178,7 +178,7 @@ export default function WhyChooseUs() {
             </p>
 
             {/* Overlapping Image Collage (Fully Responsive Layout) */}
-            <div className="relative h-[290px] sm:h-[340px] lg:h-[420px] w-[320px] sm:w-full mx-auto sm:mx-0 mt-6 z-10">
+            <div className="relative h-[290px] sm:h-[340px] lg:h-[420px] w-[320px] sm:w-[380px] lg:w-[440px] mx-auto lg:mx-0 mt-6 z-10">
               
               {/* Glowing decorative curvature border backdrop overlay */}
               <div className="absolute left-[24%] bottom-[-15px] w-52 sm:w-64 h-52 sm:h-64 border-4 sm:border-[8px] border-secondary/5 rounded-full pointer-events-none -z-10" />
@@ -194,7 +194,7 @@ export default function WhyChooseUs() {
               </div>
 
               {/* Image 2: Center Foreground (Safety Engineer) */}
-              <div className="absolute left-[24%] sm:left-[28%] bottom-0 w-[150px] sm:w-52 lg:w-52 h-[210px] sm:h-64 lg:h-64 rounded-[1.4rem] sm:rounded-[2rem] lg:rounded-[2.5rem] border-2 sm:border-4 lg:border-[5px] border-white shadow-xl overflow-hidden transition-transform duration-300 hover:scale-[1.02] cursor-pointer">
+              <div className="absolute left-[28%] bottom-0 w-[150px] sm:w-52 lg:w-52 h-[210px] sm:h-64 lg:h-64 rounded-[1.4rem] sm:rounded-[2rem] lg:rounded-[2.5rem] border-2 sm:border-4 lg:border-[5px] border-white shadow-xl overflow-hidden transition-transform duration-300 hover:scale-[1.02] cursor-pointer">
                 <img
                   src="/assets/why_choose_center.jpg"
                   alt="ICVRT safety specialist engineer"
@@ -204,7 +204,7 @@ export default function WhyChooseUs() {
               </div>
 
               {/* Image 3: Right Background (Skyscrapers) */}
-              <div className="absolute left-[52%] sm:left-[60%] bottom-4 sm:bottom-8 w-[115px] sm:w-[140px] lg:w-[179px] h-[155px] sm:h-[180px] lg:h-[230px] rounded-[1.2rem] sm:rounded-[1.8rem] lg:rounded-[2.2rem] border-2 sm:border-4 lg:border-[5px] border-white shadow-md rotate-[4deg] overflow-hidden transition-transform duration-300 hover:rotate-0 hover:scale-[1.02] cursor-pointer">
+              <div className="absolute right-0 bottom-4 sm:bottom-8 w-[115px] sm:w-[140px] lg:w-[179px] h-[155px] sm:h-[180px] lg:h-[230px] rounded-[1.2rem] sm:rounded-[1.8rem] lg:rounded-[2.2rem] border-2 sm:border-4 lg:border-[5px] border-white shadow-md rotate-[4deg] overflow-hidden transition-transform duration-300 hover:rotate-0 hover:scale-[1.02] cursor-pointer">
                 <img
                   src="/assets/why_choose_right.jpg"
                   alt="City skyscrapers visual"

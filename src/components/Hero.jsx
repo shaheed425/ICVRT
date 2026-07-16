@@ -35,7 +35,7 @@ export default function Hero({ setSearchQuery }) {
       <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1.1px,transparent_1.1px)] [background-size:18px_18px] opacity-15 pointer-events-none z-0" />
       
       {/* Full-Bleed Graphic Background Visual Layer */}
-      <div className="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden top-20">
+      <div className="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden top-0 sm:top-20">
         <img
           src="/assets/hero_safety_refinery.jpg"
           alt="iCVRT refinery safety visual background"
@@ -52,7 +52,7 @@ export default function Hero({ setSearchQuery }) {
         {/* LEFT COLUMN: HERO COPY & SEARCH BAR */}
         <div
           ref={textGroupRef}
-          className="lg:col-span-7 flex flex-col items-start text-left w-full max-w-full overflow-hidden relative z-10 pt-[42vh] sm:pt-0"
+          className="lg:col-span-7 flex flex-col items-start text-left w-full max-w-full overflow-hidden relative z-10 pt-[28vh] sm:pt-0"
         >
           {/* Top category label */}
           <span className="text-[10px] sm:text-xs font-black text-secondary uppercase tracking-widest mb-4">
@@ -66,7 +66,7 @@ export default function Hero({ setSearchQuery }) {
           </h1>
 
           {/* Description */}
-          <p className="text-[13px] sm:text-sm text-slate-900 sm:text-slate-600 font-extrabold sm:font-semibold leading-relaxed max-w-xl mb-6">
+          <p className="text-[13px] sm:text-sm text-secondary sm:text-slate-600 font-extrabold sm:font-semibold leading-relaxed max-w-xl mb-6">
             Professional training programs that meet global standards and industry demands.
           </p>
 
